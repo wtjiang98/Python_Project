@@ -1,7 +1,8 @@
 
 import base64, requests, re
 
-fo = open("list.txt", "wb+")
+# fo = open("list.txt", "wb+")
+
 cnt = 0
 for i in range(2015201101, 2015202131):
     s = requests.session()
@@ -23,6 +24,5 @@ for i in range(2015201101, 2015202131):
 
     if fi is None:
         cnt = cnt + 1
-        fo.write(zh + psw)
 
 print(cnt)
