@@ -18,11 +18,11 @@ def getConn():
         "2", p_p_col_id="column-2", p_p_id="58", p_p_lifecycle="1", p_p_mode="view", p_p_state=
         "normal", saveLastPath="0",
     )
-    try:
-        res = s.post(url=url, data=data, cookies=mycoo)
-    except:
-        print('wrong')
-        print(res.status_code, res.text)
+
+    res = s.post(url=url, data=data, cookies=mycoo, verify=False)
+    print(res, res.text)
+
+
 
 
 if __name__ == '__main__':
