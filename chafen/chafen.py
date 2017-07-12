@@ -1,7 +1,7 @@
 
 import requests, re, time
 #from time import strftime,gmtime
-# 以后要记住！cookies是dict！！！
+# 以后要记住！cookies是dict！！！ 好像两边都是字符串
 
 cnt = 0
 while 1:
@@ -14,9 +14,8 @@ while 1:
         'applicant': "ACTIONQUERYSTUDENTSCORE"
     }
     url = 'http://jw.hrbeu.edu.cn/ACTIONLOGON.APPPROCESS'
-    co9937 = 'ZlZh5PJcFhDp7Cfpy2MtTF6y3pyc54WqQpj9Qp3hqnkyflmGDkJg'
     mycoo = {
-        'JSESSIONID': co9937
+        'JSESSIONID': 'ZlZh5PJcFhDp7Cfpy2MtTF6y3pyc54WqQpj9Qp3hqnkyflmGDkJg'
     }
     s = requests.session()
     cur = s.post(url=url, data=data, cookies=mycoo)
