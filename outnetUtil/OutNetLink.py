@@ -31,6 +31,5 @@ def getConn():
     return s
 
 
-
 if __name__ == '__main__':
     testConn()
