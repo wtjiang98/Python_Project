@@ -8,7 +8,6 @@ from outnetUtil import OutNetLink
 fo = open("getlist_by_outweb.txt", "w+")
 cnt = 0
 
-
 def getList():
     global cnt, fo
     for i in range(2015201101, 2015202135):
