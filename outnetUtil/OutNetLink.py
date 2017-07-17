@@ -30,6 +30,5 @@ def getConn():
     res = s.post(url=url, data=data, cookies=mycoo, verify=False)
     return s
 
-
 if __name__ == '__main__':
     testConn()
