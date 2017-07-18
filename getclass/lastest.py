@@ -5,16 +5,23 @@ from outnetUtil import OutNetLink
 init() 用于模拟登陆
 加密方式：BASE64
 '''
-import requests, time, threading
+import time
 import datetime
 import re
 
+prefix = 'https://ssl.hrbeu.edu.cn/web/1/http/1/'
+
+
+def https_url(url):
+    return prefix + url[7:]
+
 
 def init():
+    # 登录
+    global prefix
     s = OutNetLink.getConn()
-    prefix = 'https://ssl.hrbeu.edu.cn/web/1/http/1/'
     url = 'http://edusys.hrbeu.edu.cn/jsxsd/xk/LoginToXk'
-    url = prefix + url[7:]
+    url = https_url(url)
     data = {
         'encoded': 'MjAxNTIwMTEwOA==%%%and0MTk5ODAzMzE='
     }
@@ -24,21 +31,21 @@ def init():
 
     # 点击选课中心
     url = 'http://edusys.hrbeu.edu.cn/jsxsd/xsxk/xklc_list?Ves632DSdyV=NEW_XSD_PYGL'
-    url = prefix + url[7:]
+    url = https_url(url)
     cur = s.get(url)
     # print(cur.text)
     # print(s.cookies)
 
     # 进入选课按钮 第一次
     url = 'http://edusys.hrbeu.edu.cn/jsxsd/xsxk/xklc_view?jx0502zbid=24E47B01842B422EBCDB3A4A61A6D4B6'
-    url = prefix + url[7:]
+    url = https_url(url)
     cur = s.get(url)
     # print(cur.text)
     # print(s.cookies)
 
     #进入选课按钮 第二次
     url = 'http://edusys.hrbeu.edu.cn/jsxsd/xsxk/xsxk_index?jx0502zbid=24E47B01842B422EBCDB3A4A61A6D4B6'
-    url = prefix + url[7:]
+    url = https_url(url)
     cur = s.get(url)
     curtext = cur.text
     # print(cur.text)
@@ -60,13 +67,10 @@ def init():
 if __name__ == '__main__':
     init()
 
-times = dict()
-finish = dict()
-
 
 def thread_make(url, name, s):
     global finish
-    if finish.get(name) is True:
+    if finish.get(name):
         return 0
     else:
         # th = threading.Thread(target=get_lesson, args=(url,name,s))
@@ -103,29 +107,40 @@ def get_lesson(url, name, s):
         return -1
 
 
-def go():
+def login():
     while 1:
-        while 1:
-            try:
-                s = init()
-                print('登陆成功！ 时间：', datetime.datetime.now())
-                break
-            except:
-                wait = 0.5
-                print('网络阻塞，%d秒后重启连接！ 时间：' % wait, datetime.datetime.now())
-                time.sleep(wait)
-        while 1:
-            a = thread_make('http://edusys.hrbeu.edu.cn/jsxsd/xsxkkc/xxxkOper?jx0404id=201720181004724', u'系统设计', s)
-            if a == -1 or a == 3:
-                break
-            a = thread_make('http://edusys.hrbeu.edu.cn/jsxsd/xsxkkc/xxxkOper?jx0404id=201720181004689', u'信息安全', s)
-            if a == -1 or a == 3:
-                break
-            a = thread_make('http://edusys.hrbeu.edu.cn/jsxsd/xsxkkc/xxxkOper?jx0404id=201720181004699', u'C++', s)
-            if a == -1 or a == 3:
-                break
-            time.sleep(0.001)
+        try:
+            s = init()
+            print('登陆成功！ 时间：', datetime.datetime.now())
+            break
+        except:
+            wait = 0.5
+            print('网络阻塞，%d秒后重启连接！ 时间：' % wait, datetime.datetime.now())
+            time.sleep(wait)
+    return s
 
+
+def work(s, url_list):
+    while 1:
+        for url in url_list:
+            res = thread_make(url[0], url[1], s)
+        if res == -1 or res == 3:
+            break
+        time.sleep(0.001)
+
+
+times = dict()
+finish = dict()
+
+
+def link_start():
+    s = login()
+    url_list = [
+        (https_url('http://edusys.hrbeu.edu.cn/jsxsd/xsxkkc/xxxkOper?jx0404id=201720181004724'), '系统设计'),
+        (https_url('http://edusys.hrbeu.edu.cn/jsxsd/xsxkkc/xxxkOper?jx0404id=201720181004689'), '信息安全'),
+        (https_url('http://edusys.hrbeu.edu.cn/jsxsd/xsxkkc/xxxkOper?jx0404id=201720181004699'), 'C++'),
+    ]
+    work(s, url_list)
 
 
 

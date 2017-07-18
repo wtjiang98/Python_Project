@@ -17,7 +17,8 @@ def testConn():
     cur = s.get(url=url)
     print(cur, cur.text)
 
-def getConn():
+
+def getConn() -> object:
     s = requests.session()
     url = 'https://ssl.hrbeu.edu.cn/por/login_psw.csp'
     mycoo = {'_gscu_2051300436': "999075300q8tx216", '_gscbrs_2051300436': "1",
