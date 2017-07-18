@@ -1,6 +1,8 @@
 # encoding = utf-8
 
-import base64, re
+import base64
+import re
+
 from outnetUtil import OutNetLink
 
 # https://ssl.hrbeu.edu.cn/web/1/http/1/edusys.hrbeu.edu.cn/jsxsd/index.jsp 外网正常登录
@@ -10,7 +12,8 @@ fo = open("getlist_by_outweb.txt", "w+", encoding='utf-8')
 # 对utf-8文件要用utf-8编码打开。。
 cnt = 0
 
-def getList():
+
+def get_list():
     global cnt, fo
     for i in range(2015201514, 2015201515):
         s = OutNetLink.getConn()
@@ -37,5 +40,5 @@ def getList():
     print(cnt)
 
 if __name__ == '__main__':
-    getList()
+    get_list()
     fo.close()
