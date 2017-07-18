@@ -3,7 +3,7 @@ from outnetUtil import OutNetLink
 '''
 ---单线程---
 init() 用于模拟登陆
-加密方式：BSAE64
+加密方式：BASE64
 '''
 import requests, time, threading
 import datetime
@@ -43,13 +43,13 @@ def init():
     curtext = cur.text
     # print(cur.text)
     # print(s.cookies)
-    patten = u'当前未开放选课'
+    patten = '当前未开放选课'
     cntt = 0
     while 1:
         cur = s.get(url)
         curtext = cur.text
         ret = re.search(pattern=patten, string=curtext)
-        if(ret is None):
+        if ret is None:
             break
         time.sleep(1)
         cntt += 1
@@ -64,16 +64,16 @@ times = dict()
 finish = dict()
 
 
-def thread_make(url,name,s):
+def thread_make(url, name, s):
     global finish
     if finish.get(name) is True:
         return 0
     else:
         # th = threading.Thread(target=get_lesson, args=(url,name,s))
         th = get_lesson(url, name, s)
-        if th is -1:
+        if th == -1:
             return -1
-        elif th is 3:
+        elif th == 3:
             return 3
     return 0
 
@@ -85,19 +85,19 @@ def get_lesson(url, name, s):
     try:
         ans = s.get(url)
         ret = ans.json()
-        #print(ret)
-        times[name] = times[name] + 1
-        if ret['success'] == True:
-            print (name,'第',times[name],u'次抢课尝试成功  信息：%r 时间：'%(ret['message']),datetime.datetime.now())
+        # print(ret)
+        times[name] += 1
+        if ret['success']:
+            print(name, '第', times[name], '次抢课尝试成功  信息：%r 时间：' % (ret['message']), datetime.datetime.now())
             return 1
-        elif ret['message'] is u'选课失败：此课程已选！':
-            print (name,'第',times[name],u'次抢课时发现已选 信息：%r 时间：'%(ret['message']),datetime.datetime.now())
-            finish['name']=True
+        elif ret['message'] == '选课失败：此课程已选！':
+            print(name, '第', times[name], '次抢课时发现已选 信息：%r 时间：' % (ret['message']), datetime.datetime.now())
+            finish['name'] = True
             return 2
-        elif re.search(u'当前账号已在别处登录', ret['message']) is not None:
+        elif re.search('当前账号已在别处登录', ret['message']) is not None:
             return 3
         else:
-            print(name,'第',times[name],u'次抢课尝试未中 信息：%r 时间：'%(ret['message']),datetime.datetime.now())
+            print(name, '第', times[name], '次抢课尝试未中 信息：%r 时间：' % (ret['message']), datetime.datetime.now())
             return 0
     except:
         return -1
