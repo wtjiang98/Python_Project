@@ -35,8 +35,8 @@
       <file leaf-file-name="lastest.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/getclass/lastest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+            <state relative-caret-position="107">
+              <caret line="127" column="17" selection-start-line="127" selection-start-column="17" selection-end-line="127" selection-end-column="17" />
               <folding />
             </state>
           </provider>
@@ -161,8 +161,8 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="SearchEverywhereHistoryKey" value="keymap&#9;ACTION&#9;Help.KeymapReference" />
-    <property name="ChangesBrowser.SHOW_FLATTEN" value="true" />
+    <property name="SearchEverywhereHistoryKey" value="git&#9;ACTION&#9;Git.Menu&#10;keymap&#9;ACTION&#9;Help.KeymapReference" />
+    <property name="ChangesBrowser.SHOW_FLATTEN" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -560,7 +560,14 @@
       <option name="project" value="LOCAL" />
       <updated>1500349240256</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="cur&#10;">
+      <created>1500349322674</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1500349322674</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -929,8 +936,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/getclass/lastest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="134" column="0" selection-start-line="134" selection-start-column="0" selection-end-line="134" selection-end-column="0" />
+        <state relative-caret-position="107">
+          <caret line="127" column="17" selection-start-line="127" selection-start-column="17" selection-end-line="127" selection-end-column="17" />
           <folding />
         </state>
       </provider>
