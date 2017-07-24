@@ -94,11 +94,11 @@ def get_lesson(url, name, s):
         if ret['success']:
             print(name, '第', times[name], '次抢课尝试成功  信息：%r 时间：' % (ret['message']), datetime.datetime.now())
             return 1
-        elif ret['message'] == '选课失败：此课程已选！':
+        elif '选课失败：此课程已选！' in ret['message']:
             print(name, '第', times[name], '次抢课时发现已选 信息：%r 时间：' % (ret['message']), datetime.datetime.now())
             finish['name'] = True
             return 2
-        elif re.search('当前账号已在别处登录', ret['message']) is not None:
+        elif '当前账号已在别处登录' in ret['message']:
             return 3
         else:
             print(name, '第', times[name], '次抢课尝试未中 信息：%r 时间：' % (ret['message']), datetime.datetime.now())
@@ -112,20 +112,20 @@ def login():
         try:
             s = init()
             print('登陆成功！ 时间：', datetime.datetime.now())
-            break
         except:
             wait = 0.5
             print('网络阻塞，%d秒后重启连接！ 时间：' % wait, datetime.datetime.now())
             time.sleep(wait)
-    return s
+        else:
+            return s
 
 
 def work(s, url_list):
     while 1:
         for url in url_list:
             res = thread_make(url[0], url[1], s)
-        if res == -1 or res == 3:
-            break
+            if res == -1 or res == 3:
+                break
         time.sleep(0.001)
 
 
