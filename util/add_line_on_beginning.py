@@ -13,15 +13,6 @@ def line_prepender(filename, line):
             f.write(line.rstrip('\r\n') + '\n' + content)
 
 
-def go_add():
-    rootdir = r'D:\Dalian_CUR\amz_4_baf'
-    for parent, dirnames, filenames in os.walk(rootdir):
-        # case 2
-        for filename in filenames:
-            url = os.path.join(parent, filename)
-            if re.search('html', filename):
-                line_prepender(url, '<!doctype html>')
-
 
 def daohang(filename):
     with open(filename, 'r+', encoding='utf-8') as f:
@@ -95,15 +86,67 @@ def daohang(filename):
         f.write(content)
 
 
-def go_daohang():
-    rootdir = r'D:\Dalian_CUR\amz_4_baf'
+def go_sub(filename):
+    with open(filename, 'r+', encoding='utf-8') as f:
+        content = f.read()
+        content = re.sub('- More Templates', '', content)
+        f.seek(0, 0)
+        f.write(content)
+
+
+def checklink(filename):
+    with open(filename, 'r+', encoding='utf-8') as f:
+        content = f.read()
+        res = re.search('取消报销', content)
+        if res is None:
+            print(filename)
+
+
+def search(filename):
+    with open(filename, 'r+', encoding='utf-8') as f:
+        content = f.read()
+        res = re.search(
+            '<a href="javascript:;" id="admin-fullscreen" class="tpl-header-list-link"><span class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a>',
+            content)
+        if res is not None:
+            print(filename)
+
+
+def add(filename):
+    with open(filename, 'r+', encoding='utf-8') as f:
+        content = f.read()
+        prefix = '''<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+'''
+        newname = re.sub('html', 'jsp', filename)
+        # print(newname)
+        with open(newname, 'w+', encoding='utf-8') as newf:
+            newcontent = prefix + '\r\n' + content
+            newf.write(newcontent)
+
+
+def merge(filename):
+    with open(filename, 'r+', encoding='utf-8') as f:
+        content = f.read()
+        content = re.sub('<i class="am-icon-search"></i>', '                                            ', content)
+        f.seek(0, 0)
+        f.write(content)
+
+
+def forfile():
+    global rootdir
     for parent, dirnames, filenames in os.walk(rootdir):
-        # case 2
         for filename in filenames:
             url = os.path.join(parent, filename)
             if re.search('html', filename):
-                daohang(url)
+                add(url)
+
+
+rootdir = r'D:\Dalian_CUR\CUR\amz_4_baf'
+
+# f.seek(0, os.SEEK_CUR) 从后面append
 
 
 if __name__ == '__main__':
-    go_daohang()
+    forfile()
