@@ -1,10 +1,18 @@
 # coding=utf-8
-from outnetUtil import OutNetLink
+
+import os
+import sys
+
+curPath = os.path.abspath(os.path.dirname(__file__))
+rootPath = os.path.split(curPath)[0]
+sys.path.append(rootPath)
 '''
 ---单线程---
 init() 用于模拟登陆
 加密方式：BASE64
 '''
+
+from outnetUtil import OutNetLink
 import time
 import datetime
 import re
@@ -30,21 +38,21 @@ def init():
     # print(s.cookies)
 
     # 点击选课中心
-    url = 'http://edusys.hrbeu.edu.cn/jsxsd/xsxk/xklc_list?Ves632DSdyV=NEW_XSD_PYGL'
+    url = 'http://edusys.hrbeu.edu.cn/jsxsd/xsxk/xklc_list.do?Ves632DSdyV=NEW_XSD_PYGL'
     url = https_url(url)
     cur = s.get(url)
     # print(cur.text)
     # print(s.cookies)
 
     # 进入选课按钮 第一次
-    url = 'http://edusys.hrbeu.edu.cn/jsxsd/xsxk/xklc_view?jx0502zbid=24E47B01842B422EBCDB3A4A61A6D4B6'
+    url = 'http://edusys.hrbeu.edu.cn/jsxsd/xsxk/xklc_view.do?jx0502zbid=5868B0BE07B04121BECFAF0F50DDD02C'
     url = https_url(url)
     cur = s.get(url)
     # print(cur.text)
     # print(s.cookies)
 
     #进入选课按钮 第二次
-    url = 'http://edusys.hrbeu.edu.cn/jsxsd/xsxk/xsxk_index?jx0502zbid=24E47B01842B422EBCDB3A4A61A6D4B6'
+    url = 'http://edusys.hrbeu.edu.cn/jsxsd/xsxk/xsxk_index.do?jx0502zbid=5868B0BE07B04121BECFAF0F50DDD02C'
     url = https_url(url)
     cur = s.get(url)
     curtext = cur.text
@@ -62,10 +70,6 @@ def init():
         cntt += 1
         print('the system is close, trying to login', cntt)
     return s
-
-
-if __name__ == '__main__':
-    init()
 
 
 def thread_make(url, name, s):
@@ -113,7 +117,7 @@ def login():
             s = init()
             print('登陆成功！ 时间：', datetime.datetime.now())
         except:
-            wait = 0.5
+            wait = 0.1
             print('网络阻塞，%d秒后重启连接！ 时间：' % wait, datetime.datetime.now())
             time.sleep(wait)
         else:
@@ -126,7 +130,7 @@ def work(s, url_list):
             res = thread_make(url[0], url[1], s)
             if res == -1 or res == 3:
                 break
-        time.sleep(0.001)
+        time.sleep(0.01)
 
 
 times = dict()
@@ -136,14 +140,16 @@ finish = dict()
 def link_start():
     s = login()
     url_list = [
-        (https_url('http://edusys.hrbeu.edu.cn/jsxsd/xsxkkc/xxxkOper?jx0404id=201720181004724'), '系统设计'),
-        (https_url('http://edusys.hrbeu.edu.cn/jsxsd/xsxkkc/xxxkOper?jx0404id=201720181004689'), '信息安全'),
-        (https_url('http://edusys.hrbeu.edu.cn/jsxsd/xsxkkc/xxxkOper?jx0404id=201720181004699'), 'C++'),
+        (https_url('http://edusys.'
+                   'hrbeu.edu.cn/jsxsd/xsxkkc/xxxkO'
+                   'per?jx0404id=201720182004114'), '软件项目管理'),
+
     ]
     work(s, url_list)
 
 
-
+if __name__ == '__main__':
+    link_start()
 
 '''
 def get1():

@@ -1,9 +1,10 @@
-import requests, time, _thread
+import requests
+import time
 
 s = requests.session()
 url = 'http://edusys.hrbeu.edu.cn/jsxsd/xk/LoginToXk'
 data = {
-    'encoded': 'MjAxNTIwMTEyNA==%%%eXo3NzgxNTc='
+    'encoded': 'MjAxNTIwMTEwOA==%%%and0MTk5ODAzMzE='
 }
 cur = s.post(url=url, data=data)
 # print(cur.text)
@@ -25,9 +26,21 @@ cur = s.get(url)
 url = 'http://edusys.hrbeu.edu.cn/jsxsd/xsxk/xsxk_index?jx0502zbid=24E47B01842B422EBCDB3A4A61A6D4B6'
 cur = s.get(url)
 
+print(cur.text)
 
-# print(cur.text)
-# print(s.cookies)
+while (1):
+    cnt = 1
+    ans = s.get('https://ssl.hrbeu.edu.cn/web/0/http/1/edu'
+                'sys.hrbeu.edu.cn/jsxsd/xsxkkc/xxxkOper?jx0404id=201720182004114')
+    ret = ans.json()
+    print(ret)
+    if (ret['success'] == True):
+        break
+    else:
+        time.sleep(0.2)
+        print('系统设计', cnt)
+        cnt += 1
+
 
 # final
 
@@ -142,21 +155,6 @@ def get8():
             print('创造性思维与创新方法', cnt)
             cnt += 1
 
-try:
-    _thread.start_new_thread(get1, ())
-    _thread.start_new_thread(get2, ())
-    _thread.start_new_thread(get3, ())
-    _thread.start_new_thread(get4, ())
-    _thread.start_new_thread(get5, ())
-    _thread.start_new_thread(get6, ())
-    _thread.start_new_thread(get7, ())
-    _thread.start_new_thread(get8, ())
-
-except:
-    print("wrong")
-
-while (1):
-    pass
 
 
 
